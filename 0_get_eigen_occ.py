@@ -38,10 +38,8 @@ def readmol(fin, basis, charge=0):
     return mol
 
 def hcore(mol):
-
-    h = mol.intor_symmetric('int1e_kin')
-    h+= mol.intor_symmetric('int1e_nuc')
-
+    h  = mol.intor_symmetric('int1e_kin')
+    h += mol.intor_symmetric('int1e_nuc')
     return h
 
 def SAD(mol):
@@ -64,6 +62,12 @@ def SAP_dm(mol):
     fock = hc + vhf
     return fock
 
+def SAP(mol):
+    mf = dft.RKS(mol)
+    vsap = mf.get_vsap()
+    t = mol.intor_symmetric('int1e_kin')
+    fock = t + vsap
+    return fock
 ########################## Main ##########################
 
 
@@ -75,16 +79,15 @@ def main():
     filename = xyz_filename.split('/')[-1].split('.')[0]
     mol = readmol(xyz_filename, args.basis, charge = args.charge)
 
-    if args.guess=='sad':
-      fock = SAD(mol)
-    elif args.guess=='core':
-      fock = hcore(mol)
-    elif args.guess=='sap-dm':
-      fock = SAP_dm(mol)
-    else:
-      print("Unknown guess");
-      exit(0)
+    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm}
 
+    if args.guess not in guesses.keys():
+      print("Unknown guess. Available guesses:", list(guesses.keys()));
+      exit(0)
+    else:
+      guess = guesses[args.guess]
+
+    fock = guess(mol)
     e,v = solveF(mol, fock)
 
     # 1-assumption repr. occ. eigenvalues.
