@@ -1,5 +1,5 @@
 import argparse
-from pyscf import gto
+from pyscf import gto,dft
 from pyscf.dft import numint
 from pyscf.scf import hf
 import scipy
@@ -10,17 +10,21 @@ parser = argparse.ArgumentParser(description='This program computes the core ham
 
 parser.add_argument('--mol', type=str, dest='filename',
                             help='Path to molecular structure in xyz format', required=True)
-parser.add_argument('--basis', type=str, required=True, dest='basis', 
+parser.add_argument('--basis', type=str, required=True, dest='basis',
                             help="The name of the basis set used for the DM computation.")
 parser.add_argument('--charge', type=int, nargs='?', dest='charge', default=0,
                             help='(optional) Total charge of the system (default = 0)')
+parser.add_argument('--guess', type=str, dest='guess', required=True,
+                            help='Initial guess type')
+parser.add_argument('--func', type=str, dest='func', default='b3lyp',
+                            help='DFT functional (default = b3lyp)')
 
 args = parser.parse_args()
 
 ########################## Helper Functions ##########################
 
 def readmol(fin, basis, charge=0):
-    """ Read xyz and return pyscf-mol object """ 
+    """ Read xyz and return pyscf-mol object """
 
     f = open(fin, "r")
     molxyz = '\n'.join(f.read().split('\n')[2:])
@@ -40,8 +44,28 @@ def hcore(mol):
 
     return h
 
+def SAD(mol):
+    hc = hcore(mol)
+    dm =  hf.init_guess_by_atom(mol)
+    vhf = hf.get_veff(mol, dm)
+    fock = hc + vhf
+    return fock
+
+def solveF(mol, fock):
+    s1e = mol.intor_symmetric('int1e_ovlp')
+    return scipy.linalg.eigh(fock, s1e)
+
+def SAP_dm(mol):
+    mf = dft.RKS(mol)
+    mf.xc = args.func
+    dm = dft.rks.init_guess_by_vsap(mf, mol)
+    vhf = mf.get_veff(mol, dm)
+    hc = hcore(mol)
+    fock = hc + vhf
+    return fock
 
 ########################## Main ##########################
+
 
 def main():
     """ Main """
@@ -51,20 +75,22 @@ def main():
     filename = xyz_filename.split('/')[-1].split('.')[0]
     mol = readmol(xyz_filename, args.basis, charge = args.charge)
 
-    dm =  hf.init_guess_by_atom(mol)
-    vhf = hf.get_veff(mol, dm)
-   
-    hc = hcore(mol)
-    s1e = mol.intor_symmetric('int1e_ovlp')
+    if args.guess=='sad':
+      fock = SAD(mol)
+    elif args.guess=='core':
+      fock = hcore(mol)
+    elif args.guess=='sap-dm':
+      fock = SAP_dm(mol)
+    else:
+      print("Unknown guess");
+      exit(0)
 
-    fock = hc + vhf
-
-    # Diagonalize it
-    e, v = scipy.linalg.eigh(fock, s1e)
+    e,v = solveF(mol, fock)
 
     # 1-assumption repr. occ. eigenvalues.
     nocc = mol.nelectron // 2
     np.save('eigens_'+filename, e[:nocc])
+    print(*e[:nocc])
 
 
 if __name__ == "__main__":
