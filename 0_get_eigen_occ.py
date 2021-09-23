@@ -4,6 +4,7 @@ from pyscf.dft import numint
 from pyscf.scf import hf
 import scipy
 import numpy as np
+from LB2020guess import LB2020guess
 
 ########################## Parsing user defined input ##########################
 parser = argparse.ArgumentParser(description='This program computes the core hamiltonian guess for a given molecular system.')
@@ -83,6 +84,10 @@ def SAP(mol):
     t = mol.intor_symmetric('int1e_kin')
     fock = t + vsap
     return fock
+
+def LB(mol):
+    return LB2020guess().Heff(mol)
+
 ########################## Main ##########################
 
 
@@ -94,7 +99,7 @@ def main():
     filename = xyz_filename.split('/')[-1].split('.')[0]
     mol = readmol(xyz_filename, args.basis, charge = args.charge)
 
-    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm, 'gwh':GWH}
+    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm, 'gwh':GWH, 'lb':LB}
 
     if args.guess not in guesses.keys():
       print("Unknown guess. Available guesses:", list(guesses.keys()));
