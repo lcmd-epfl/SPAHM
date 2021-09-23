@@ -42,6 +42,21 @@ def hcore(mol):
     h += mol.intor_symmetric('int1e_nuc')
     return h
 
+def GWH(mol):
+    h = hcore(mol)
+    S = mol.intor_symmetric('int1e_ovlp')
+
+    K = 1.75 # See J. CHem. Phys. 1952, 20, 837
+    h_gwh = np.zeros_like(h)
+    for i in range(h.shape[0]):
+        for j in range(h.shape[1]):
+            if i != j:
+                h_gwh[i,j] = 0.5 * K * (h[i,i] + h[j,j]) *S[i,j]
+            else:
+                h_gwh[i,j] = h[i,i]
+
+    return h_gwh
+
 def SAD(mol):
     hc = hcore(mol)
     dm =  hf.init_guess_by_atom(mol)
@@ -79,7 +94,7 @@ def main():
     filename = xyz_filename.split('/')[-1].split('.')[0]
     mol = readmol(xyz_filename, args.basis, charge = args.charge)
 
-    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm}
+    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm, 'gwh':GWH}
 
     if args.guess not in guesses.keys():
       print("Unknown guess. Available guesses:", list(guesses.keys()));
@@ -98,3 +113,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
