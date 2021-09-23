@@ -4,6 +4,7 @@ from pyscf.dft import numint
 from pyscf.scf import hf
 import scipy
 import numpy as np
+from pyscf.scf.hf import _init_guess_huckel_orbitals
 from LB2020guess import LB2020guess
 
 ########################## Parsing user defined input ##########################
@@ -47,7 +48,7 @@ def GWH(mol):
     h = hcore(mol)
     S = mol.intor_symmetric('int1e_ovlp')
 
-    K = 1.75 # See J. CHem. Phys. 1952, 20, 837
+    K = 1.75 # See J. Chem. Phys. 1952, 20, 837
     h_gwh = np.zeros_like(h)
     for i in range(h.shape[0]):
         for j in range(h.shape[1]):
@@ -85,6 +86,9 @@ def SAP(mol):
     fock = t + vsap
     return fock
 
+def huckel():
+    return None
+
 def LB(mol):
     return LB2020guess().Heff(mol)
 
@@ -99,7 +103,7 @@ def main():
     filename = xyz_filename.split('/')[-1].split('.')[0]
     mol = readmol(xyz_filename, args.basis, charge = args.charge)
 
-    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm, 'gwh':GWH, 'lb':LB}
+    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm, 'gwh':GWH, 'lb':LB, 'huckel':huckel}
 
     if args.guess not in guesses.keys():
       print("Unknown guess. Available guesses:", list(guesses.keys()));
@@ -107,8 +111,11 @@ def main():
     else:
       guess = guesses[args.guess]
 
-    fock = guess(mol)
-    e,v = solveF(mol, fock)
+    if args.guess == 'huckel':
+        e,v = _init_guess_huckel_orbitals(mol)
+    else:
+        fock = guess(mol)
+        e,v = solveF(mol, fock)
 
     # 1-assumption repr. occ. eigenvalues.
     nocc = mol.nelectron // 2
