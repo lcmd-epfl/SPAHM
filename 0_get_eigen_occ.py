@@ -6,9 +6,10 @@ import scipy
 import numpy as np
 from pyscf.scf.hf import _init_guess_huckel_orbitals
 from LB2020guess import LB2020guess
+from utils import *
 
 ########################## Parsing user defined input ##########################
-parser = argparse.ArgumentParser(description='This program computes the core hamiltonian guess for a given molecular system.')
+parser = argparse.ArgumentParser(description='This program computes the chosen initial guess for a given molecular system.')
 
 parser.add_argument('--mol', type=str, dest='filename',
                             help='Path to molecular structure in xyz format', required=True)
@@ -25,19 +26,6 @@ args = parser.parse_args()
 
 ########################## Helper Functions ##########################
 
-def readmol(fin, basis, charge=0):
-    """ Read xyz and return pyscf-mol object """
-
-    f = open(fin, "r")
-    molxyz = '\n'.join(f.read().split('\n')[2:])
-    f.close()
-    mol = gto.Mole()
-    mol.atom = molxyz
-    mol.basis = basis
-    mol.charge = charge
-    mol.build()
-
-    return mol
 
 def hcore(mol):
     h  = mol.intor_symmetric('int1e_kin')
