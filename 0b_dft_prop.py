@@ -1,10 +1,11 @@
 import argparse
-from pyscf import dft
+from pyscf import dft,scf
 import numpy as np
 from utils import *
+import scipy
 
 ########################## Parsing user defined input ##########################
-parser = argparse.ArgumentParser(description='This program runs a DFT computation for a given molecular system.')
+parser = argparse.ArgumentParser(description='This program computes properties from a density matrix.')
 
 parser.add_argument('--mol', type=str, dest='filename',
                             help='Path to molecular structure in xyz format', required=True)
@@ -26,21 +27,36 @@ def main():
     filename = xyz_filename.split('/')[-1].split('.')[0]
     mol = readmol(xyz_filename, args.basis, charge = args.charge)
 
-    mf = dft.RKS(mol)
-    mf.xc = args.func
-    mf.verbose = 0
-    mf.run()
+    #mf = dft.RKS(mol)
+    #mf.xc = args.func
+    #mf.verbose = 0
+    #mf.run()
 
-    f = mf.get_fock()
-    d = mf.make_rdm1()
-    e = mf.mo_energy
-    E = mf.e_tot
+    #f = mf.get_fock()
+    #d = mf.make_rdm1()
+    #e = mf.mo_energy
+    #E = mf.e_tot
+
+    #nocc = mol.nelectron // 2
+
+    #e = np.load(filename+'_eigens_'+args.func+'_'+args.basis+'.npy')
+    f = np.load(filename+'_Fock_'+args.func+'_'+args.basis+'.npy')
+    d = np.load(filename+'_dm_'+args.func+'_'+args.basis+'.npy')
+
+
+    #print(e)
+    s1e = mol.intor_symmetric('int1e_ovlp')
+    e,c = scipy.linalg.eigh(f, s1e)
+    #print(e)
 
     nocc = mol.nelectron // 2
-    np.save(filename+'_eigens_'+args.func+'_'+args.basis, e[:nocc])
-    np.save(filename+'_Fock_'+args.func+'_'+args.basis, f)
-    np.save(filename+'_dm_'+args.func+'_'+args.basis, d)
-    print(filename, args.func, E)
+    homo = e[nocc-1]
+    homolumo = e[nocc]-homo
+
+    dip = scf.hf.dip_moment(mol=mol, dm=d, unit='au', verbose=0)
+    dip = np.linalg.norm(dip)
+
+    print(filename, "  % .10e  % .10e  % .10e" % (homo, homolumo, dip))
 
 
 if __name__ == "__main__":
