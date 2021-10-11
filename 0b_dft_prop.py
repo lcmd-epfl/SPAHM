@@ -27,27 +27,12 @@ def main():
     filename = xyz_filename.split('/')[-1].split('.')[0]
     mol = readmol(xyz_filename, args.basis, charge = args.charge)
 
-    #mf = dft.RKS(mol)
-    #mf.xc = args.func
-    #mf.verbose = 0
-    #mf.run()
+    path = args.func+'_'+args.basis+'/'
+    f = np.load(path+filename+'_Fock_'+args.func+'_'+args.basis+'.npy')
+    d = np.load(path+filename+'_dm_'+args.func+'_'+args.basis+'.npy')
 
-    #f = mf.get_fock()
-    #d = mf.make_rdm1()
-    #e = mf.mo_energy
-    #E = mf.e_tot
-
-    #nocc = mol.nelectron // 2
-
-    #e = np.load(filename+'_eigens_'+args.func+'_'+args.basis+'.npy')
-    f = np.load(filename+'_Fock_'+args.func+'_'+args.basis+'.npy')
-    d = np.load(filename+'_dm_'+args.func+'_'+args.basis+'.npy')
-
-
-    #print(e)
     s1e = mol.intor_symmetric('int1e_ovlp')
     e,c = scipy.linalg.eigh(f, s1e)
-    #print(e)
 
     nocc = mol.nelectron // 2
     homo = e[nocc-1]
