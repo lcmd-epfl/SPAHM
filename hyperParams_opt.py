@@ -30,7 +30,7 @@ else:
   from sklearn.metrics.pairwise import laplacian_kernel as kernel
 
 def k_fold_opt(eta, sigma):
-   K_all = kernel(X_train, X_train, 1/sigma)
+   K_all = kernel(X_train, X_train, 1.0/sigma)
    K_all[np.diag_indices_from(K_all)] += eta
    # Do k-fold cross validation to find the best parameters
    kfold = KFold(n_splits=s_splits, shuffle=False)
