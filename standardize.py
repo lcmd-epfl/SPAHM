@@ -79,3 +79,8 @@ for core in [X_core, X_core_aligned, X_core_st_gr, X_core_st_col]:
     np.save('X_comb_'+str(i), np.hstack((core, val)))
     i+=1
 
+i=0
+for core in ['X_core', 'X_core_aligned', 'X_core_st_gr', 'X_core_st_col']:
+  for val in ['X_val', 'X_val_st_gr', 'X_val_st_col']:
+    print('X_comb_'+str(i), core, val)
+    i+=1
