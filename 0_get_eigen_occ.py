@@ -19,8 +19,8 @@ parser.add_argument('--charge', type=int, nargs='?', dest='charge', default=0,
                             help='(optional) Total charge of the system (default = 0)')
 parser.add_argument('--guess', type=str, dest='guess', required=True,
                             help='Initial guess type')
-parser.add_argument('--func', type=str, dest='func', default='b3lyp',
-                            help='DFT functional (default = b3lyp)')
+parser.add_argument('--func', type=str, dest='func', default='hf',
+                            help='DFT functional (default = hf)')
 
 args = parser.parse_args()
 
@@ -50,7 +50,9 @@ def GWH(mol):
 def SAD(mol):
     hc = hcore(mol)
     dm =  hf.init_guess_by_atom(mol)
-    vhf = hf.get_veff(mol, dm)
+    mf = dft.RKS(mol)
+    mf.xc = args.func
+    vhf = mf.get_veff(dm=dm)
     fock = hc + vhf
     return fock
 
