@@ -80,7 +80,9 @@ def huckel():
     return None
 
 def LB(mol):
-    return LB2020guess().Heff(mol)
+    return LB2020guess(parameters='HF').Heff(mol)
+def LB_HFS(mol):
+    return LB2020guess(parameters='HFS').Heff(mol)
 
 ########################## Main ##########################
 
@@ -93,7 +95,7 @@ def main():
     filename = xyz_filename.split('/')[-1].split('.')[0]
     mol = readmol(xyz_filename, args.basis, charge = args.charge)
 
-    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm, 'gwh':GWH, 'lb':LB, 'huckel':huckel}
+    guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'sap-dm':SAP_dm, 'gwh':GWH, 'lb':LB, 'huckel':huckel, 'lb-hfs':LB_HFS}
 
     if args.guess not in guesses.keys():
       print("Unknown guess. Available guesses:", list(guesses.keys()));
