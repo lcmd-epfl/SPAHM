@@ -21,8 +21,15 @@ from sklearn.feature_selection import mutual_info_regression as mi
 for x in ['X_core', 'X_val', 'X_occ', 'X_core_aligned', 'X_core_st_gr', 'X_core_st_col', 'X_val_st_gr', 'X_val_st_col']:
   X = eval(x)
   m = []
+  m1 = []
   for Y in [e, d, h, g]:
     m.append(mi(X, Y))
-# TODO перенормировать на кол-во ненулевых элементов
-  m = np.array(m).T
+    t = []
+    for xi in X.T:
+      idx = np.where(xi!=0.0)
+      t.append(mi(xi[idx].reshape(-1, 1),Y[idx])[0])
+    m1.append(t)
+  m  = np.array(m).T
+  m1 = np.array(m1).T
   np.savetxt('MI_'+x+'.dat', m)
+  np.savetxt('MI_renorm_'+x+'.dat', m1)
