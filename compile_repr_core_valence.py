@@ -1,9 +1,15 @@
-import numpy as np
 import os
+import argparse
+import numpy as np
 
-# USER DEFINED INPUTS
-geom_directory = '../QM7/geometries/'
-eig_directory = './eigens/'
+parser = argparse.ArgumentParser(description='This program pads the representations with zeros.')
+parser.add_argument('--geom', type=str, dest='geom_directory', default='../QM7/geometries/',
+                              help='Directory with xyz files')
+parser.add_argument('--eig',  type=str, dest='eig_directory', default='./eigens/',
+                              help='Directory with eigenvalues')
+args = parser.parse_args()
+geom_directory = args.geom_directory
+eig_directory  = args.eig_directory
 
 mol_filenames = sorted(os.listdir(geom_directory))
 eig_filenames = sorted(os.listdir(eig_directory))
@@ -14,14 +20,12 @@ for rep in eig_filenames:
   x = np.load(eig_directory+rep)
   X0.append(x)
   lens.append(len(x))
-#  print(x)
 
 X = np.zeros((len(X0), max(lens)))
 
 for i,x in enumerate(X0):
   X[i,0:lens[i]] = x
 
-#print(X.shape)
 np.save('X_eigen_occ', X)
 
 def count_core_val(path):
