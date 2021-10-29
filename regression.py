@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 from sklearn.model_selection import train_test_split
+from utils import get_kernel
 
 # USER DEFINED
 train_size = [0.125, 0.25, 0.5, 0.75, 1.0]
@@ -27,10 +28,7 @@ y = np.loadtxt(args.prop)
 n_rep = args.s_splits
 eta   = args.eta
 sigma = args.sigma
-if args.kernel=='G':
-  from sklearn.metrics.pairwise import rbf_kernel as kernel
-else:
-  from sklearn.metrics.pairwise import laplacian_kernel as kernel
+kernel = get_kernel(args.kernel)
 
 # split train and test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)

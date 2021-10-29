@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 from sklearn.model_selection import train_test_split, KFold
+from utils import get_kernel
 
 # USER DEFINED
 eta = np.logspace(-10, 0, 5)
@@ -24,10 +25,7 @@ X = np.load(args.repr)
 y = np.loadtxt(args.prop)
 test_size = args.test_size
 s_splits  = args.s_splits
-if args.kernel=='G':
-  from sklearn.metrics.pairwise import rbf_kernel as kernel
-else:
-  from sklearn.metrics.pairwise import laplacian_kernel as kernel
+kernel = get_kernel(args.kernel)
 
 def k_fold_opt(eta, sigma):
    K_all = kernel(X_train, X_train, 1.0/sigma)

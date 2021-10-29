@@ -1,4 +1,5 @@
 import pyscf
+import numpy
 
 def readmol(fin, basis, charge=0):
     """ Read xyz and return pyscf-mol object """
@@ -13,3 +14,28 @@ def readmol(fin, basis, charge=0):
     mol.build()
 
     return mol
+
+def my_laplacian_kernel(X, Y, gamma):
+  def cdist(X, Y):
+    K = numpy.zeros((len(X),len(Y)))
+    for i,x in enumerate(X):
+      x = numpy.array([x] * len(Y))
+      d = numpy.abs(x-Y)
+      while len(d.shape)>1:
+        d = numpy.sum(d, axis=1) # several axis available for np > 1.7.0
+      K[i,:] = d
+    return K
+  K = -gamma * cdist(X, Y)
+  numpy.exp(K, K)
+  return K
+
+
+def get_kernel(arg):
+  if arg=='G':
+    from sklearn.metrics.pairwise import rbf_kernel
+    return rbf_kernel
+  elif arg=='L':
+    from sklearn.metrics.pairwise import laplacian_kernel
+    return laplacian_kernel
+  elif arg=='myL':
+    return my_laplacian_kernel
