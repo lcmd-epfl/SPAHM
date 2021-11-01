@@ -2,6 +2,8 @@ import copy
 import numpy
 import pyscf.data, pyscf.df
 
+""" Taken from https://github.com/briling/aepm and modified """
+
 class LB2020guess:
 
   acfile_default  = './parameters_HF.dat'

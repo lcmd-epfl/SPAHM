@@ -2,20 +2,19 @@ import pyscf
 import numpy
 
 def readmol(fin, basis, charge=0):
-    """ Read xyz and return pyscf-mol object """
-
-    f = open(fin, "r")
-    molxyz = '\n'.join(f.read().split('\n')[2:])
-    f.close()
-    mol = pyscf.gto.Mole()
-    mol.atom = molxyz
-    mol.basis = basis
-    mol.charge = charge
-    mol.build()
-
-    return mol
+  """ Read xyz and return pyscf-mol object """
+  f = open(fin, "r")
+  molxyz = '\n'.join(f.read().split('\n')[2:])
+  f.close()
+  mol = pyscf.gto.Mole()
+  mol.atom = molxyz
+  mol.basis = basis
+  mol.charge = charge
+  mol.build()
+  return mol
 
 def my_laplacian_kernel(X, Y, gamma):
+  """ Compute Laplacian kernel between X and Y """
   def cdist(X, Y):
     K = numpy.zeros((len(X),len(Y)))
     for i,x in enumerate(X):
@@ -29,8 +28,8 @@ def my_laplacian_kernel(X, Y, gamma):
   numpy.exp(K, K)
   return K
 
-
 def get_kernel(arg):
+  """ Returns the kernel function depending on the cli argument """
   if arg=='G':
     from sklearn.metrics.pairwise import rbf_kernel
     return rbf_kernel
@@ -39,3 +38,4 @@ def get_kernel(arg):
     return laplacian_kernel
   elif arg=='myL':
     return my_laplacian_kernel
+
