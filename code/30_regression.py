@@ -11,7 +11,7 @@ parser.add_argument('--y',      type=str,   dest='prop',      required=True, hel
 parser.add_argument('--splits', type=int,   dest='splits',    default=5,     help='number of splits')
 parser.add_argument('--eta',    type=float, dest='eta',       default=1e-5,  help='eta hyperparameter')
 parser.add_argument('--sigma',  type=float, dest='sigma',     default=32.0,  help='sigma hyperparameter')
-parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian and L or myL for Laplacian)')
+parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian and L or myL for Laplacian) (default=L)')
 args = parser.parse_args()
 print(vars(args))
 

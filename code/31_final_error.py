@@ -11,7 +11,7 @@ parser.add_argument('--x',      type=str,   dest='repr',      required=True, hel
 parser.add_argument('--y',      type=str,   dest='prop',      required=True, help='path to the properties file')
 parser.add_argument('--eta',    type=float, dest='eta',       default=1e-5,  help='eta hyperparameter')
 parser.add_argument('--sigma',  type=float, dest='sigma',     default=32.0,  help='sigma hyperparameter')
-parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian and L or myL for Laplacian)')
+parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian and L or myL for Laplacian) (default=L)')
 args = parser.parse_args()
 print(vars(args))
 
