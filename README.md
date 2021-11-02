@@ -153,7 +153,7 @@ usage: code/20_hyperparameters.py [-h] --x REPR --y PROP [--test TEST_SIZE]
 
 *Example:*
 ```
-$code/20_hyperparameters.py --x examples/X_lb.npy --y examples/dipole.dat | tail -n 4
+$ code/20_hyperparameters.py --x examples/X_lb.npy --y examples/dipole.dat | tail -n 4
 
 5.183039e-01 3.005078e-01 | 1.000000e-05 31.622777
 5.182629e-01 3.004739e-01 | 3.162278e-08 31.622777
