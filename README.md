@@ -84,7 +84,7 @@ usage: code/10_get_guess_eigen.py [-h] --mol FILENAME --guess GUESS [--basis BAS
   -h, --help       show this help message and exit
   --mol FILENAME   path to molecular structure in xyz format
   --guess GUESS    initial guess type
-  --basis BASIS    AO basis set
+  --basis BASIS    AO basis set (default=MINAO)
   --charge CHARGE  total charge of the system (default=0)
   --func FUNC      DFT functional for the SAD guess (default=HF)
   --dir DIR        directory to save the output in (default=current dir)
@@ -120,7 +120,7 @@ usage: code/11_compile_repr_core_valence.py [-h] --eig EIG_DIRECTORY
   -h, --help              show this help message and exit
   --eig EIG_DIRECTORY     directory with eigenvalues
   --geom GEOM_DIRECTORY   directory with xyz files
-  --split SPLIT           whether to split the core and valence energies or not
+  --split SPLIT           whether to split the core and valence energies or not (default=False)
   --dir DIR               directory to save the output in (default=current dir)
 
 ```
@@ -175,9 +175,10 @@ usage: code/30_regression.py [-h] --x REPR --y PROP [--splits SPLITS] [--eta ETA
   -h, --help       show this help message and exit
   --x REPR         path to the representations file
   --y PROP         path to the properties file
-  --splits SPLITS  number of splits
-  --eta ETA        η hyperparameter
-  --sigma SIGMA    σ hyperparameter
+  --test TEST_SIZE test set fraction (default=0.2)
+  --splits SPLITS  number of splits (default=5)
+  --eta ETA        η hyperparameter (default=1e-5)
+  --sigma SIGMA    σ hyperparameter (default=32.0)
   --kernel KERNEL  kernel type (G for Gaussian and L or myL for Laplacian) (default L)
 ```
 </details>
@@ -186,12 +187,12 @@ usage: code/30_regression.py [-h] --x REPR --y PROP [--splits SPLITS] [--eta ETA
 ```
 $ code/30_regression.py --x examples/X_lb.npy --y examples/dipole.dat --sigma 32.0 --eta 1e-10
 
-{'repr': 'examples/X_lb.npy', 'prop': 'examples/dipole.dat', 'splits': 5, 'eta': 1e-10, 'sigma': 32.0, 'kernel': 'L'}
-1 0.4117585150124702 0.06743843610247373
-2 0.4902565666730059 0.22740642192194313
-4 0.24098508911478195 0.09452877356757929
-6 0.2122535428769567 0.1448381068537368
-8 0.19394974423745648 4.028690966273743e-15
+{'repr': 'examples/X_lb.npy', 'prop': 'examples/dipole.dat', 'test_size': 0.2, 'splits': 5, 'eta': 1e-10, 'sigma': 32.0, 'kernel': 'L'}
+1       4.508885e-01    1.963332e-01
+2       3.743045e-01    2.243524e-01
+4       3.685258e-01    2.894607e-01
+6       2.480406e-01    1.777623e-01
+8       1.939497e-01    6.768116e-15
 ```
 computes the learning curve (σ = 32, η = 1e-10)
 and prints the number of training molecules, the prediction error, and its standard deviation <br>
@@ -207,8 +208,9 @@ usage: code/31_final_error.py [-h] --x REPR --y PROP [--eta ETA] [--sigma SIGMA]
   -h, --help       show this help message and exit
   --x REPR         path to the representations file
   --y PROP         path to the properties file
-  --eta ETA        η hyperparameter
-  --sigma SIGMA    σ hyperparameter
+  --test TEST_SIZE test set fraction (default=0.2)
+  --eta ETA        η hyperparameter (default=1e-5)
+  --sigma SIGMA    σ hyperparameter (default=32.0)
   --kernel KERNEL  kernel type (G for Gaussian and L or myL for Laplacian) (default L)
 ```
 </details>
@@ -217,9 +219,9 @@ usage: code/31_final_error.py [-h] --x REPR --y PROP [--eta ETA] [--sigma SIGMA]
 ```
 $ code/31_final_error.py --x examples/X_lb.npy --y examples/dipole.dat --sigma 32.0 --eta 1e-10
 
-{'repr': 'examples/X_lb.npy', 'prop': 'examples/dipole.dat', 'eta': 1e-10, 'sigma': 32.0, 'kernel': 'L'}
-1.154644450495074803e-01
-2.724350434253958175e-01
+{'repr': 'examples/X_lb.npy', 'prop': 'examples/dipole.dat', 'eta': 1e-10, 'test_size': 0.2, 'sigma': 32.0, 'kernel': 'L'}
+1.154644e-01
+2.724350e-01
 ```
 prints the final prediction error for the test set molecules (just two in this case).
 
