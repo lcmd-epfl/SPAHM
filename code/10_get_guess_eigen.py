@@ -9,12 +9,12 @@ from LB2020guess import LB2020guess
 from utils import readmol
 
 parser = argparse.ArgumentParser(description='This program computes the chosen initial guess for a given (closed-shell) molecular system.')
-parser.add_argument('--mol',    type=str, dest='filename', required=True,   help='Path to molecular structure in xyz format')
-parser.add_argument('--guess',  type=str, dest='guess',    required=True,   help='Initial guess type')
-parser.add_argument('--basis',  type=str, dest='basis'  ,  default='minao', help='AO basis set.')
-parser.add_argument('--charge', type=int, dest='charge',   default=0,       help='Total charge of the system (default = 0).')
-parser.add_argument('--func',   type=str, dest='func',     default='hf',    help='DFT functional for the SAD guess (default = hf).')
-parser.add_argument('--dir',    type=str, dest='dir',      default='./',    help='Directory to save the output in (default = current).')
+parser.add_argument('--mol',    type=str, dest='filename', required=True,   help='path to molecular structure in xyz format')
+parser.add_argument('--guess',  type=str, dest='guess',    required=True,   help='initial guess type')
+parser.add_argument('--basis',  type=str, dest='basis'  ,  default='minao', help='AO basis set')
+parser.add_argument('--charge', type=int, dest='charge',   default=0,       help='total charge of the system (default=0)')
+parser.add_argument('--func',   type=str, dest='func',     default='hf',    help='DFT functional for the SAD guess (default=HF)')
+parser.add_argument('--dir',    type=str, dest='dir',      default='./',    help='directory to save the output in (default=current dir)')
 args = parser.parse_args()
 
 def hcore(mol):

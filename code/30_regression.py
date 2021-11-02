@@ -6,12 +6,12 @@ from sklearn.model_selection import train_test_split
 from utils import get_kernel
 
 parser = argparse.ArgumentParser(description='This program computes the learning curve.')
-parser.add_argument('--x',      type=str,   dest='repr',      required=True, help='Path to the representations file.')
-parser.add_argument('--y',      type=str,   dest='prop',      required=True, help='Path to the properties file.')
-parser.add_argument('--splits', type=int,   dest='splits',    default=5,     help='Number of splits.')
-parser.add_argument('--eta',    type=float, dest='eta',       default=1e-5,  help='Eta hyperparameter.')
-parser.add_argument('--sigma',  type=float, dest='sigma',     default=32.0,  help='Sigma hyperparameter.')
-parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='Kernel type (G for Gaussian and L or myL for Laplacian).')
+parser.add_argument('--x',      type=str,   dest='repr',      required=True, help='path to the representations file')
+parser.add_argument('--y',      type=str,   dest='prop',      required=True, help='path to the properties file')
+parser.add_argument('--splits', type=int,   dest='splits',    default=5,     help='number of splits')
+parser.add_argument('--eta',    type=float, dest='eta',       default=1e-5,  help='eta hyperparameter')
+parser.add_argument('--sigma',  type=float, dest='sigma',     default=32.0,  help='sigma hyperparameter')
+parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian and L or myL for Laplacian)')
 args = parser.parse_args()
 print(vars(args))
 

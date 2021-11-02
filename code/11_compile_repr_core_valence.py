@@ -5,10 +5,10 @@ import argparse
 import numpy as np
 
 parser = argparse.ArgumentParser(description='This program pads the representations with zeros.')
-parser.add_argument('--eig',   type=str,  dest='eig_directory',  required=True,  help='Directory with eigenvalues')
-parser.add_argument('--geom',  type=str,  dest='geom_directory', default=None,   help='Directory with xyz files')
-parser.add_argument('--split', type=bool, dest='split',          default=False,  help='Whether to split the core and valence energies or not')
-parser.add_argument('--dir',   type=str,  dest='dir',            default='./',   help='Directory to save the output in (default = current).')
+parser.add_argument('--eig',   type=str,  dest='eig_directory',  required=True,  help='directory with eigenvalues')
+parser.add_argument('--geom',  type=str,  dest='geom_directory', default=None,   help='directory with xyz files')
+parser.add_argument('--split', type=bool, dest='split',          default=False,  help='whether to split the core and valence energies or not')
+parser.add_argument('--dir',   type=str,  dest='dir',            default='./',   help='directory to save the output in (default=current dir)')
 args = parser.parse_args()
 
 def count_core_val(path):
