@@ -127,6 +127,6 @@ class LB2020guess:
   def Heff(self, mol):
     self.mol = mol
     self.Hcore = mol.intor('int1e_nuc_sph') + mol.intor('int1e_kin_sph')
-    self.Heff = self.Hcore + self.HLB20(mol)
-    return self.Heff
+    self.H    = self.Hcore + self.HLB20(mol)
+    return self.H
 
