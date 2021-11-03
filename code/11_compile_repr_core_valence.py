@@ -26,7 +26,7 @@ def main():
     print('Please specify the geometries directory')
     return
 
-  eig_directory = args.eig_directory
+  eig_directory = args.eig_directory+'/'
   eig_filenames = sorted(os.listdir(eig_directory))
   name = os.path.basename(os.path.dirname(eig_directory))
 
@@ -45,7 +45,7 @@ def main():
   if args.split==False:
     return
 
-  geom_directory = args.geom_directory
+  geom_directory = args.geom_directory+'/'
   mol_filenames  = sorted(os.listdir(geom_directory))
   N = np.array([count_core_val(geom_directory+mol) for mol in mol_filenames])
 
