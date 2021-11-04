@@ -3,7 +3,7 @@
 This code supports the paper
 > A. Fabrizio, K. R. Briling, and C. Corminboeuf,<br>
 > “SPAHM: the Spectrum of Approximated Hamiltonian Matrices representations”<br>
-> [`arXiv:2110.13037 [physics.chem-ph]`](https://arxiv.org/abs/2110.13037)<br>
+> [`arXiv:2110.13037 [physics.chem-ph]`](https://arxiv.org/abs/2110.13037) [`(doi:10.21203/rs.3.rs-1017031/v1)`](https://doi.org/10.21203/rs.3.rs-1017031/v1)<br>
 
 This is a collection of scripts which allow to reproduce the results presented in the paper.
 
