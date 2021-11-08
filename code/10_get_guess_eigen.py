@@ -60,10 +60,12 @@ def LB(mol):
 
 def LB_HFS(mol):
   return LB2020guess(parameters='HFS').Heff(mol)
+def LB_ECP(mol):
+  return LB2020guess(parameters='HF-ECP').Heff(mol)
 
 def main():
 
-  guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'gwh':GWH, 'lb':LB, 'huckel':None, 'lb-hfs':LB_HFS}
+  guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'gwh':GWH, 'lb':LB, 'huckel':None, 'lb-hfs':LB_HFS, 'lb-ecp':LB_ECP}
   if args.guess not in guesses.keys():
     print('Unknown guess. Available guesses:', list(guesses.keys()));
     exit(1)
