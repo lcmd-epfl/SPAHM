@@ -1,7 +1,7 @@
 import pyscf
 import numpy
 
-def readmol(fin, basis, charge=0):
+def readmol(fin, basis, charge=0, spin=0):
   """ Read xyz and return pyscf-mol object """
   f = open(fin, "r")
   molxyz = '\n'.join(f.read().split('\n')[2:])
@@ -10,6 +10,7 @@ def readmol(fin, basis, charge=0):
   mol.atom = molxyz
   mol.basis = basis
   mol.charge = charge
+  mol.spin = spin
   mol.build()
   return mol
 
