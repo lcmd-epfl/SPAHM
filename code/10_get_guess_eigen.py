@@ -3,7 +3,7 @@
 import os
 import argparse
 import numpy as np
-from pyscf import dft,scf
+from pyscf import scf
 from LB2020guess import LB2020guess
 from utils import readmol
 from guesses import *
@@ -29,7 +29,7 @@ def main():
   if args.guess == 'huckel':
     e,v = scf.hf._init_guess_huckel_orbitals(mol)
   else:
-    fock = guess(mol)
+    fock = guess(mol, args.func)
     e,v = solveF(mol, fock)
 
   e1 = get_occ(e, mol.nelec, args.spin)

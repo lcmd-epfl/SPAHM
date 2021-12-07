@@ -1,14 +1,16 @@
 import sys
 import numpy
 import scipy
+import pyscf
+import pyscf.dft
 from LB2020guess import LB2020guess
 
-def hcore(mol):
+def hcore(mol, *_):
   h  = mol.intor_symmetric('int1e_kin')
   h += mol.intor_symmetric('int1e_nuc')
   return h
 
-def GWH(mol):
+def GWH(mol, *_):
   h = hcore(mol)
   S = mol.intor_symmetric('int1e_ovlp')
   K = 1.75 # See J. Chem. Phys. 1952, 20, 837
@@ -21,26 +23,26 @@ def GWH(mol):
         h_gwh[i,j] = h[i,i]
   return h_gwh
 
-def SAD(mol):
+def SAD(mol, func):
   hc = hcore(mol)
-  dm =  scf.hf.init_guess_by_atom(mol)
-  mf = dft.RKS(mol)
-  mf.xc = args.func
+  dm =  pyscf.scf.hf.init_guess_by_atom(mol)
+  mf = pyscf.dft.RKS(mol)
+  mf.xc = func
   vhf = mf.get_veff(dm=dm)
   fock = hc + vhf
   return fock
 
-def SAP(mol):
-  mf = dft.RKS(mol)
+def SAP(mol, *_):
+  mf = pyscf.dft.RKS(mol)
   vsap = mf.get_vsap()
   t = mol.intor_symmetric('int1e_kin')
   fock = t + vsap
   return fock
 
-def LB(mol):
+def LB(mol, *_):
   return LB2020guess(parameters='HF').Heff(mol)
 
-def LB_HFS(mol):
+def LB_HFS(mol, *_):
   return LB2020guess(parameters='HFS').Heff(mol)
 
 def solveF(mol, fock):

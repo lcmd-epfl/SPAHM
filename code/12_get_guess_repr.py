@@ -4,7 +4,7 @@ import os
 import sys
 import argparse
 import numpy as np
-import scipy
+from pyscf import scf
 from utils import readmol,compile_repr
 from guesses import *
 
