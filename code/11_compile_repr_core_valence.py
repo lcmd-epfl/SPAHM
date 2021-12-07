@@ -35,11 +35,15 @@ def main():
   for rep in eig_filenames:
     x = np.load(eig_directory+rep)
     X0.append(x)
-    lens.append(len(x))
+    lens.append(x.shape)
 
-  X = np.zeros((len(X0), max(lens)))
-  for i,x in enumerate(X0):
-    X[i,0:lens[i]] = x
+  X = np.zeros((len(X0), *max(lens)))
+  if len(X.shape)==2:
+    for i,x in enumerate(X0):
+      X[i,0:lens[i][-1]] = x
+  else:
+    for i,x in enumerate(X0):
+      X[i,:,0:lens[i][-1]] = x
   np.save(args.dir+'/X_'+name, X)
 
   if args.split==False:
