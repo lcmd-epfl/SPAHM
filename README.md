@@ -13,7 +13,7 @@ This is a collection of scripts which allow to reproduce the results presented i
 * `scipy >= 1.2`
 * `scikit-learn >= 0.20`
 * [`pyscf >= 1.6`](https://github.com/pyscf/pyscf)
-* [`QML-toolkit >= 0.4`](https://www.qmlcode.org/) (optional, for comparison with CM and SLATM)
+* [`QML-toolkit >= 0.4`](https://www.qmlcode.org/) (optional, for comparison with CM and SLATM, see [`code/32_kernel.py`](code/32_kernel.py))
 
 ## Usage
 
@@ -134,6 +134,38 @@ usage: code/11_compile_repr_core_valence.py [-h] --eig EIG_DIRECTORY
 $ code/11_compile_repr_core_valence.py --eig examples/lb/ --dir examples/
 ```
 writes the merged representations to `examples/X_lb.npy`.
+
+**NB: you can use the following script instead of the two above if no fine tuning is needed:**
+
+
+**12.** `code/12_get_guess_repr.py` computes SPAHM representations for a set of molecules.
+<details><summary>(click to see the command-line options)</summary>
+
+```
+usage: 12_get_guess_repr.py [-h] --geom GEOM_DIRECTORY --guess GUESS
+                            [--basis BASIS] [--charge CHARGE] [--spin SPIN]
+                            [--func FUNC] [--dir DIR]
+
+This program computes the chosen initial guess for a set of molecules.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --geom GEOM_DIRECTORY
+                        directory with xyz files
+  --guess GUESS         initial guess type
+  --basis BASIS         AO basis set (default=MINAO)
+  --charge CHARGE       file with a list of charges
+  --spin SPIN           file with a list of numbers of unpaired electrons
+  --func FUNC           DFT functional for the SAD guess (default=HF)
+  --dir DIR             directory to save the output in (default=current dir)
+```
+</details>
+
+*Example:*
+```
+$ code/12_get_guess_repr.py --geom examples/xyz/ --dir examples/
+```
+writes the representations to `examples/X_lb.npy`.
 
 ### 2. Optimize the hyperparameters
 

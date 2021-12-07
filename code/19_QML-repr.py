@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import argparse
 import numpy as np
 import qml
@@ -29,7 +30,7 @@ def main():
 
   reprs = {'cm':get_CM, 'slatm':get_SLATM}
   if args.repr not in reprs.keys():
-    print('Unknown representation. Available representations:', list(reprs.keys()));
+    print('Unknown representation. Available representations:', list(reprs.keys()), file=sys.stderr);
     exit(1)
   get_repr = reprs[args.repr]
 

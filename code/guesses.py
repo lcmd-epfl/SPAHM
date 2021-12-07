@@ -1,3 +1,5 @@
+import sys
+import numpy
 import scipy
 from LB2020guess import LB2020guess
 
@@ -10,7 +12,7 @@ def GWH(mol):
   h = hcore(mol)
   S = mol.intor_symmetric('int1e_ovlp')
   K = 1.75 # See J. Chem. Phys. 1952, 20, 837
-  h_gwh = np.zeros_like(h)
+  h_gwh = numpy.zeros_like(h)
   for i in range(h.shape[0]):
     for j in range(h.shape[1]):
       if i != j:
@@ -48,7 +50,7 @@ def solveF(mol, fock):
 def get_guess(arg):
   guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'gwh':GWH, 'lb':LB, 'huckel':None, 'lb-hfs':LB_HFS}
   if arg not in guesses.keys():
-    print('Unknown guess. Available guesses:', list(guesses.keys()));
+    print('Unknown guess. Available guesses:', list(guesses.keys()), file=sys.stderr);
     exit(1)
   return guesses[arg]
 
@@ -58,7 +60,7 @@ def get_occ(e, nelec, spin):
     return e[:nocc]
   else:
     nocc = nelec
-    e1 = np.zeros((2, nocc[0]))
+    e1 = numpy.zeros((2, nocc[0]))
     e1[0,:nocc[0]] = e[:nocc[0]]
     e1[1,:nocc[1]] = e[:nocc[1]]
     return e1
