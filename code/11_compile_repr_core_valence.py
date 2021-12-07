@@ -3,6 +3,7 @@
 import os
 import argparse
 import numpy as np
+from utils import compile_repr
 
 parser = argparse.ArgumentParser(description='This program pads the representations with zeros.')
 parser.add_argument('--eig',   type=str,  dest='eig_directory',  required=True,  help='directory with eigenvalues')
@@ -37,13 +38,7 @@ def main():
     X0.append(x)
     lens.append(x.shape)
 
-  X = np.zeros((len(X0), *max(lens)))
-  if len(X.shape)==2:
-    for i,x in enumerate(X0):
-      X[i,0:lens[i][-1]] = x
-  else:
-    for i,x in enumerate(X0):
-      X[i,:,0:lens[i][-1]] = x
+  X = compile_repr(X0, lens)
   np.save(args.dir+'/X_'+name, X)
 
   if args.split==False:

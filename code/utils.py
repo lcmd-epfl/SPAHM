@@ -40,3 +40,13 @@ def get_kernel(arg):
   elif arg=='myL':
     return my_laplacian_kernel
 
+def compile_repr(X0, lens):
+  X = numpy.zeros((len(X0), *max(lens)))
+  if len(X.shape)==2:
+    for i,x in enumerate(X0):
+      X[i,0:lens[i][-1]] = x
+  else:
+    for i,x in enumerate(X0):
+      X[i,:,0:lens[i][-1]] = x
+  return X
+

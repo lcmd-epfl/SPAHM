@@ -36,8 +36,8 @@ def main():
   geom_directory = args.geom_directory+'/'
   mol_filenames  = sorted(os.listdir(geom_directory))
   mols = []
-  for i in mol_filenames:
-    mols.append(qml.Compound(xyz=geom_directory+i))
+  for f in mol_filenames:
+    mols.append(qml.Compound(xyz=geom_directory+f))
 
   X = get_repr(mols)
   np.save(args.dir+'/X_'+args.repr, X)
