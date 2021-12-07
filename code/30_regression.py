@@ -12,7 +12,7 @@ parser.add_argument('--test',   type=float, dest='test_size', default=0.2,   hel
 parser.add_argument('--splits', type=int,   dest='splits',    default=5,     help='number of splits (default=5)')
 parser.add_argument('--eta',    type=float, dest='eta',       default=1e-5,  help='eta hyperparameter (default=1e-5)')
 parser.add_argument('--sigma',  type=float, dest='sigma',     default=32.0,  help='sigma hyperparameter (default=32.0)')
-parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian and L or myL for Laplacian) (default=L)')
+parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian, L for Laplacian, myL for Laplacian for open-shell systems) (default L)')
 args = parser.parse_args()
 print(vars(args))
 

@@ -10,7 +10,7 @@ parser.add_argument('--x',      type=str,   dest='repr',      required=True, hel
 parser.add_argument('--y',      type=str,   dest='prop',      required=True, help='path to the properties file')
 parser.add_argument('--test',   type=float, dest='test_size', default=0.2,   help='test set fraction (default=0.2)')
 parser.add_argument('--splits', type=int,   dest='splits',    default=5,     help='k in k-fold cross validation (default=5)')
-parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian and L or myL for Laplacian) (default=L)')
+parser.add_argument('--kernel', type=str,   dest='kernel',    default='L',   help='kernel type (G for Gaussian, L for Laplacian, myL for Laplacian for open-shell systems) (default L)')
 args = parser.parse_args()
 print(vars(args))
 

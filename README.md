@@ -30,6 +30,8 @@ usage: code/00_run_dft.py [-h] --mol FILENAME --basis BASIS [--charge CHARGE]
   --mol FILENAME   path to molecular structure in xyz format
   --basis BASIS    AO basis set
   --charge CHARGE  total charge of the system (default=0)
+  --spin SPIN      number of unpaired electrons (default=None) 
+                   (use 0 to treat a closed-shell system in a UHF manner)
   --func FUNC      DFT functional (default=PBE0)
   --dir DIR        directory to save the output in (default=current dir)
 ```
@@ -147,7 +149,7 @@ usage: code/20_hyperparameters.py [-h] --x REPR --y PROP [--test TEST_SIZE]
   --y PROP          path to the properties file
   --test TEST_SIZE  test set fraction (default=0.2)
   --splits SPLITS   k in k-fold cross validation (default=5)
-  --kernel KERNEL   kernel type (G for Gaussian and L or myL for Laplacian) (default L)
+  --kernel KERNEL   kernel type (G for Gaussian, L for Laplacian, myL for Laplacian for open-shell systems) (default L)
 ```
 </details>
 
@@ -179,7 +181,7 @@ usage: code/30_regression.py [-h] --x REPR --y PROP [--splits SPLITS] [--eta ETA
   --splits SPLITS  number of splits (default=5)
   --eta ETA        η hyperparameter (default=1e-5)
   --sigma SIGMA    σ hyperparameter (default=32.0)
-  --kernel KERNEL  kernel type (G for Gaussian and L or myL for Laplacian) (default L)
+  --kernel KERNEL  kernel type (G for Gaussian, L for Laplacian, myL for Laplacian for open-shell systems) (default L)
 ```
 </details>
 
@@ -211,7 +213,7 @@ usage: code/31_final_error.py [-h] --x REPR --y PROP [--eta ETA] [--sigma SIGMA]
   --test TEST_SIZE test set fraction (default=0.2)
   --eta ETA        η hyperparameter (default=1e-5)
   --sigma SIGMA    σ hyperparameter (default=32.0)
-  --kernel KERNEL  kernel type (G for Gaussian and L or myL for Laplacian) (default L)
+  --kernel KERNEL  kernel type (G for Gaussian, L for Laplacian, myL for Laplacian for open-shell systems) (default L)
 ```
 </details>
 
