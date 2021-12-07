@@ -13,6 +13,7 @@ This is a collection of scripts which allow to reproduce the results presented i
 * `scipy >= 1.2`
 * `scikit-learn >= 0.20`
 * [`pyscf >= 1.6`](https://github.com/pyscf/pyscf)
+* [`QML-toolkit >= 0.4`](https://www.qmlcode.org/) (optional, for comparison with CM and SLATM)
 
 ## Usage
 
