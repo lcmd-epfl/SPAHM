@@ -1,4 +1,4 @@
-# SPAHM
+# SPA<sup>H</sup>M
 
 This code supports the paper
 > A. Fabrizio, K. R. Briling, and C. Corminboeuf,<br>
