@@ -4,7 +4,7 @@ import sys
 import argparse
 import numpy as np
 from sklearn.model_selection import train_test_split
-from utils import get_kernel
+from utils import get_kernel,unix_time_decorator
 
 parser = argparse.ArgumentParser(description='This program computes kernel.')
 parser.add_argument('--x',      type=str,   dest='repr',      required=True, help='path to the representations file')
@@ -14,6 +14,7 @@ parser.add_argument('--dir',    type=str,   dest='dir',       default='./',   he
 args = parser.parse_args()
 print(vars(args))
 
+@unix_time_decorator
 def main():
   X = np.load(args.repr)
   sigma = args.sigma

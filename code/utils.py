@@ -1,5 +1,7 @@
 import pyscf
 import numpy
+import resource
+import time
 
 def readmol(fin, basis, charge=0, spin=0):
   """ Read xyz and return pyscf-mol object """
@@ -50,3 +52,15 @@ def compile_repr(X0, lens):
       X[i,:,0:lens[i][-1]] = x
   return X
 
+def unix_time_decorator(func):
+# thanks to https://gist.github.com/turicas/5278558
+  def wrapper(*args, **kwargs):
+    start_time, start_resources = time.time(), resource.getrusage(resource.RUSAGE_SELF)
+    ret = func(*args, **kwargs)
+    end_resources, end_time = resource.getrusage(resource.RUSAGE_SELF), time.time()
+    print(func.__name__, ':  real: %.4f  user: %.4f  sys: %.4f'%
+          (end_time - start_time,
+           end_resources.ru_utime - start_resources.ru_utime,
+           end_resources.ru_stime - start_resources.ru_stime))
+    return ret
+  return wrapper

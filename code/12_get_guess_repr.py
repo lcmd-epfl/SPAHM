@@ -5,7 +5,7 @@ import sys
 import argparse
 import numpy as np
 from pyscf import scf
-from utils import readmol,compile_repr
+from utils import readmol,compile_repr,unix_time_decorator
 from guesses import *
 
 parser = argparse.ArgumentParser(description='This program computes the chosen initial guess for a set of molecules.')
@@ -28,6 +28,23 @@ def get_chsp(f, n):
     chsp = np.zeros(n, dtype=int)
   return chsp
 
+@unix_time_decorator
+def compute_representations(mols, guess, args):
+  X0 = []
+  lens = []
+  for mol in mols:
+    if args.guess == 'huckel':
+      e,v = scf.hf._init_guess_huckel_orbitals(mol)
+    else:
+      fock = guess(mol, args.func)
+      e,v = solveF(mol, fock)
+    x = get_occ(e, mol.nelec, args.spin)
+    X0.append(x)
+    lens.append(x.shape)
+  X = compile_repr(X0, lens)
+  return X
+
+@unix_time_decorator
 def main():
 
   guess = get_guess(args.guess)
@@ -43,19 +60,7 @@ def main():
     mol = readmol(geom_directory+f, args.basis, charge=charge[i], spin=spin[i])
     mols.append(mol)
 
-  X0 = []
-  lens = []
-  for mol in mols:
-    if args.guess == 'huckel':
-      e,v = scf.hf._init_guess_huckel_orbitals(mol)
-    else:
-      fock = guess(mol)
-      e,v = solveF(mol, fock)
-    x = get_occ(e, mol.nelec, args.spin)
-    X0.append(x)
-    lens.append(x.shape)
-
-  X = compile_repr(X0, lens)
+  X = compute_representations(mols, guess, args)
   np.save(args.dir+'/X_'+args.guess, X)
 
 

@@ -6,6 +6,7 @@ import argparse
 import numpy as np
 import qml
 from qml.representations import get_slatm_mbtypes, generate_slatm
+from utils import unix_time_decorator
 
 parser = argparse.ArgumentParser(description='This program generates a standard QML representation for a set of molecules.')
 parser.add_argument('--geom',  type=str,  dest='geom_directory', required=True,  help='directory with xyz files')
@@ -21,11 +22,13 @@ def get_CM(mols):
     X[i] = mol.representation
   return X
 
+@unix_time_decorator
 def get_SLATM(mols):
   mbtypes = get_slatm_mbtypes(np.array([mol.nuclear_charges for mol in mols]))
   X = np.array([ generate_slatm(mol.coordinates, mol.nuclear_charges, mbtypes, local=False) for mol in mols ])
   return X
 
+@unix_time_decorator
 def main():
 
   reprs = {'cm':get_CM, 'slatm':get_SLATM}
