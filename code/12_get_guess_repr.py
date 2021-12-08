@@ -56,7 +56,7 @@ def main():
 
   mols = []
   for i,f in enumerate(mol_filenames):
-    print(f)
+    #print(f)
     mol = readmol(geom_directory+f, args.basis, charge=charge[i], spin=spin[i])
     mols.append(mol)
 
