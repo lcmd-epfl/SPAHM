@@ -4,7 +4,6 @@ import os
 import argparse
 import numpy as np
 from pyscf import scf
-from LB2020guess import LB2020guess
 from utils import readmol
 from guesses import *
 
