@@ -31,8 +31,8 @@ def k_fold_opt(eta, sigma):
   all_maes = []
   for train_idx, test_idx in kfold.split(X_train):
     y_kf_train, y_kf_test = y_train[train_idx], y_train[test_idx]
-    K  = K_all[train_idx][:,train_idx]
-    Ks = K_all[test_idx ][:,train_idx]
+    K  = K_all [np.ix_(train_idx,train_idx)]
+    Ks = K_all [np.ix_(test_idx,train_idx)]
     alpha = np.linalg.solve(K, y_kf_train)
     y_kf_predict = np.dot(Ks, alpha)
     all_maes.append(np.mean(np.abs(y_kf_predict-y_kf_test)))

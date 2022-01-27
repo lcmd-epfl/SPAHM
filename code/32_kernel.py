@@ -3,7 +3,6 @@
 import sys
 import argparse
 import numpy as np
-from sklearn.model_selection import train_test_split
 from utils import get_kernel,unix_time_decorator
 
 parser = argparse.ArgumentParser(description='This program computes kernel.')

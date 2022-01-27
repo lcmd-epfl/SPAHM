@@ -29,7 +29,7 @@ def main():
   kernel = get_kernel(args.kernel)
 
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=0)
-  all_indexes_train = np.arange(X_train.shape[0])
+  all_indices_train = np.arange(X_train.shape[0])
   K_all  = kernel(X_train, X_train, 1.0/sigma)
   Ks_all = kernel(X_test,  X_train, 1.0/sigma)
   K_all[np.diag_indices_from(K_all)] += eta
@@ -41,9 +41,9 @@ def main():
     size_train = int(np.floor(X_train.shape[0]*size))
     maes = []
     for rep in range(n_rep):
-      train_idx = np.random.choice(all_indexes_train, size = size_train, replace=False)
+      train_idx = np.random.choice(all_indices_train, size = size_train, replace=False)
       y_kf_train = y_train[train_idx]
-      K  = K_all [train_idx][:,train_idx]
+      K  = K_all [np.ix_(train_idx,train_idx)]
       Ks = Ks_all[:,train_idx]
       alpha = np.linalg.solve(K, y_kf_train)
       y_kf_predict = np.dot(Ks, alpha)
