@@ -163,7 +163,7 @@ optional arguments:
 
 *Example:*
 ```
-$ code/12_get_guess_repr.py --geom examples/xyz/ --dir examples/
+$ code/12_get_guess_repr.py --geom examples/xyz/ --dir examples/ --guess lb
 ```
 writes the representations to `examples/X_lb.npy`.
 
