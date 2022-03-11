@@ -32,6 +32,7 @@ def get_SLATM(mols):
 def main():
 
   reprs = {'cm':get_CM, 'slatm':get_SLATM}
+  args.repr = args.repr.lower()
   if args.repr not in reprs.keys():
     print('Unknown representation. Available representations:', list(reprs.keys()), file=sys.stderr);
     exit(1)

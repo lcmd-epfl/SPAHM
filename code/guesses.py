@@ -50,6 +50,7 @@ def solveF(mol, fock):
   return scipy.linalg.eigh(fock, s1e)
 
 def get_guess(arg):
+  arg = arg.lower()
   guesses = {'core':hcore, 'sad':SAD, 'sap':SAP, 'gwh':GWH, 'lb':LB, 'huckel':None, 'lb-hfs':LB_HFS}
   if arg not in guesses.keys():
     print('Unknown guess. Available guesses:', list(guesses.keys()), file=sys.stderr);
