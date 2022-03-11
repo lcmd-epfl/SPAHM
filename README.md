@@ -17,6 +17,8 @@ This is a collection of scripts which allow to reproduce the results presented i
 
 ## Usage
 
+See [workflow.md](workflow.md) for scripts to reproduce the results of the paper.
+
 ### 0. Compute the target quantum-chemical properties [optional]
 
 **00.** `code/00_run_dft.py` runs a DFT computation
