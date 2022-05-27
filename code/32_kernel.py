@@ -16,7 +16,6 @@ print(vars(args))
 @unix_time_decorator
 def main():
   X = np.load(args.repr)
-  sigma = args.sigma
   kernel = get_kernel(args.kernel)
   K = kernel(X, X, 1.0/args.sigma)
   np.save(args.dir+'/K_'+args.kernel, K)

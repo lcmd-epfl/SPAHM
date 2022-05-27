@@ -38,7 +38,7 @@ def k_fold_opt(eta, sigma):
     all_maes.append(np.mean(np.abs(y_kf_predict-y_kf_test)))
   mean = np.mean(all_maes)
   std  = np.std(all_maes)
-  print(sigma, eta, mean, std)
+  print(sigma, eta, mean, std, flush=True)
   return mean, std, eta, sigma
 
 errors = []
