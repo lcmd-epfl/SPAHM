@@ -3,7 +3,7 @@
 This code supports the paper
 > A. Fabrizio, K. R. Briling, and C. Corminboeuf,<br>
 > “SPAHM: the Spectrum of Approximated Hamiltonian Matrices representations”<br>
-> Accepted for [Digital Discovery, 2022](https://doi.org/10.1039/D1DD00050K)<br>
+> [Digital Discovery, 2022, 1, 286–294](https://doi.org/10.1039/D1DD00050K)<br>
 
 This is a collection of scripts which allow to reproduce the results presented in the paper.
 
