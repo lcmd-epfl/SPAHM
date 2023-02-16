@@ -19,6 +19,7 @@ This is a collection of scripts which allow to reproduce the results presented i
 
 See [workflow.md](workflow.md) for scripts to reproduce the results of the paper.
 
+
 ### 0. Compute the target quantum-chemical properties [optional]
 
 **00.** `code/00_run_dft.py` runs a DFT computation
@@ -51,6 +52,7 @@ and writes them to the `examples/dft/` directory.
 
 ***NB: here we use a toy set of only 10 molecules!***
 
+
 **01.** `code/01_get_properties.py` takes the output of the previous script
 and computes the target properties <br> (HOMO, HOMO–LUMO gap, and dipole moment).
 <details><summary>(click to see the command-line options)</summary>
@@ -78,6 +80,11 @@ $ for i in examples/xyz/*.xyz ; do \
 writes the dipole moments to `examples/dipole.dat` in the format recognizable by other scripts (plain list).
 
 ### 1. Compute the SPAHM representations
+
+:warning:
+**Use the file names that can be unambiguously sorted (for example, `mol000, mol001, mol002, ... mol998, mol999`).
+Other formats (e.g. without leading zeros) may lead to representation-property mismatch.**
+:warning:
 
 **10.** `code/10_get_guess_eigen.py` computes a SPAHM representation for a given molecule.
 <details><summary>(click to see the command-line options)</summary>
@@ -110,7 +117,7 @@ $ for i in examples/xyz/*.xyz ; do \
     code/10_get_guess_eigen.py --mol $i --guess lb --dir examples/lb/ ; \
   done
 ```
-computes the SPAM representations based on the LB guess in the MINAO basis for the structures in `examples/xyz/` <br>
+computes the SPAHM representations based on the LB guess in the MINAO basis for the structures in `examples/xyz/` <br>
 and writes them to the `examples/lb/` directory.
 
 **11.** `code/11_compile_repr_core_valence.py` prepares the representations for regression:<br>
