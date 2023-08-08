@@ -50,6 +50,10 @@ $ for i in examples/xyz/*.xyz ; do \
 computes the Fock and density matrices for the structures in `examples/xyz/` at the PBE0/cc-pVDZ level <br>
 and writes them to the `examples/dft/` directory.
 
+> [!NOTE]
+> Here we use a toy set of only 10 molecules
+
+
 ***NB: here we use a toy set of only 10 molecules!***
 
 
