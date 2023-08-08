@@ -53,10 +53,6 @@ and writes them to the `examples/dft/` directory.
 > [!NOTE]
 > Here we use a toy set of only 10 molecules
 
-
-***NB: here we use a toy set of only 10 molecules!***
-
-
 **01.** `code/01_get_properties.py` takes the output of the previous script
 and computes the target properties <br> (HOMO, HOMO–LUMO gap, and dipole moment).
 <details><summary>(click to see the command-line options)</summary>
@@ -85,10 +81,10 @@ writes the dipole moments to `examples/dipole.dat` in the format recognizable by
 
 ### 1. Compute the SPAHM representations
 
-:warning:
-**Use the file names that can be unambiguously sorted (for example, `mol000, mol001, mol002, ... mol998, mol999`).
-Other formats (e.g. without leading zeros) may lead to representation-property mismatch.**
-:warning:
+> [!WARNING]
+> Use the file names that can be unambiguously sorted (for example, `mol000, mol001, mol002, ... mol998, mol999`).
+> Other formats (e.g. without leading zeros) may lead to representation-property mismatch.
+
 
 **10.** `code/10_get_guess_eigen.py` computes a SPAHM representation for a given molecule.
 <details><summary>(click to see the command-line options)</summary>
@@ -148,8 +144,8 @@ $ code/11_compile_repr_core_valence.py --eig examples/lb/ --dir examples/
 ```
 writes the merged representations to `examples/X_lb.npy`.
 
-**NB: you can use the following script instead of the two above if no fine tuning is needed:**
-
+> [!NOTE]
+> You can use the following script instead of the two above if no fine tuning is needed
 
 **12.** `code/12_get_guess_repr.py` computes SPAHM representations for a set of molecules.
 <details><summary>(click to see the command-line options)</summary>
