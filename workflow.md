@@ -5,10 +5,9 @@
 Let's say that we have a directory with molecular geometries in the `.xyz` format (`examples/xyz/`)
 and a file with the target property sorted in alphabetical order (`examples/dipole.dat`).
 
-:warning:
-**Use the file names that can be unambiguously sorted (for example, `mol000, mol001, mol002, ... mol998, mol999`).
-Other formats (e.g. without leading zeros) may lead to representation-property mismatch.**
-:warning:
+> [!WARNING]
+> Use the file names that can be unambiguously sorted (for example, `mol000, mol001, mol002, ... mol998, mol999`).
+Other formats (e.g. without leading zeros) may lead to representation-property mismatch.
 
 ```
 mydir="examples"
